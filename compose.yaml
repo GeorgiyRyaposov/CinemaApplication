@@ -1,0 +1,6 @@
+﻿services:
+  cinemaapplication:
+    image: cinemaapplication
+    build:
+      context: .
+      dockerfile: CinemaApplication/Dockerfile
