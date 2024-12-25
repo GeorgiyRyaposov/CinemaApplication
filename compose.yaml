@@ -4,3 +4,15 @@
     build:
       context: .
       dockerfile: CinemaApplication/Dockerfile
+      
+  cinema.database:
+        image: postgres:latest
+        container_name: cinema.database
+        environment:
+          - POSTGRES_DB=cinema
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=postgres
+        volumes:
+          - ./.containers/cinema-db:/var/lib/postgressql/data
+        ports:
+          - "5432:5432"

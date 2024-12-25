@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  cinemaapplication:
+    build:
+      context: "C:\\Projects\\CinemaProject\\CinemaApplication"
+      dockerfile: "CinemaApplication/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/CinemaApplication.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "cinemaapplication:dev"
+    ports: []
+    volumes:
+    - "C:\\Projects\\CinemaProject\\CinemaApplication\\CinemaApplication:/app:rw"
+    - "C:\\Projects\\CinemaProject\\CinemaApplication:/src:rw"
+    - "C:\\Users\\sxwx8\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
