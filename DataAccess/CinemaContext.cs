@@ -9,8 +9,14 @@ public class CinemaContext(DbContextOptions<CinemaContext> options) : DbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Cinema>().HasKey(c => c.Id);
-
+        modelBuilder.Entity<Cinema>().HasKey(x => x.Id);
+        
+        modelBuilder.Entity<Cinema>().Property(x => x.Name).IsRequired();
+        
+        modelBuilder.Entity<Cinema>().Property(x => x.Description);
+        
+        modelBuilder.Entity<Cinema>().Property(x => x.Watched);
+        
         base.OnModelCreating(modelBuilder);
     }
 }
