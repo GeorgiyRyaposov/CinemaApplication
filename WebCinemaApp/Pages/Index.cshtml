@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Описание</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        @foreach (var cinema in Model.Cinemas)
+        {
+            <tr>
+                <td>
+                    @cinema
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

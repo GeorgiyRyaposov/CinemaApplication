@@ -1,6 +1,0 @@
-@CinemaApplication_HostAddress = http://localhost:5174
-
-GET {{CinemaApplication_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

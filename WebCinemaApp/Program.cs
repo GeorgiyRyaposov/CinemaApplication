@@ -5,13 +5,10 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddRazorPages();
+
 builder.Services.AddDataServices();
 builder.Services.AddBusinessLogicServices();
-
-builder.Services.AddControllers();
 
 builder.Services.AddDbContext<CinemaContext>(x =>
 {
@@ -23,15 +20,24 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<CinemaContext>();
     context.Database.Migrate();
 }
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 
-app.MapControllers();
+app.UseRouting();
+
+app.UseAuthorization();
+
+app.MapRazorPages();
+
 app.Run();
