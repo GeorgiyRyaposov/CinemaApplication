@@ -1,4 +1,5 @@
 using BusinessLogic.Services;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -6,7 +7,7 @@ namespace WebCinemaApp.Pages;
 
 public class IndexModel : PageModel
 {
-    public List<string> Cinemas { get; private set; } = new();
+    public List<Cinema> Cinemas { get; set; }
     
     private readonly ILogger<IndexModel> _logger;
     private readonly ICinemaService _cinemaService;

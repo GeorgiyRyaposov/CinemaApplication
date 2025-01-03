@@ -22,7 +22,8 @@ if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<CinemaContext>();
-    context.Database.Migrate();
+    context.Database.EnsureCreated();
+    //context.Database.Migrate();
 }
 else
 {

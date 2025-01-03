@@ -11,11 +11,11 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<List<string>> GetCinemas()
+    public async Task<List<Cinema>> GetCinemas()
     {
         return await context.Cinemas
             .AsQueryable()
-            .Select(x => x.Name)
+            .AsNoTracking()
             .ToListAsync();
     }
 }

@@ -14,6 +14,11 @@ public class CinemaService : ICinemaService
 
     public async Task CreateAsync(string cinemaName, CancellationToken cancellationToken)
     {
+        if (string.IsNullOrEmpty(cinemaName))
+        {
+            throw new ArgumentNullException(nameof(cinemaName));
+        }
+        
         var cinema = new Cinema
         {
             Name = cinemaName,
@@ -22,7 +27,7 @@ public class CinemaService : ICinemaService
         await _cinemaRepository.CreateAsync(cinema, cancellationToken);
     }
 
-    public async Task<List<string>> GetCinemas()
+    public async Task<List<Cinema>> GetCinemas()
     {
         return await _cinemaRepository.GetCinemas();
     }
