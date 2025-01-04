@@ -6,17 +6,18 @@
 }
 
 <p>
-    <a asp-page="CreateCinema">Добавить</a>
+    <a asp-page="CreateCinema" class="btn btn-primary">Добавить</a>
 </p>
 
 @foreach (var item in Model.Cinemas)
 {
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 24rem;">
         <img class="card-img-top" src="@item.Details?.PreviewUrl" alt="{@item.Name}">
         <div class="card-body">
             <h5 class="card-title">@item.Name</h5>
             <p class="card-text">@item.Details?.ShortDescription</p>
             <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-primary">Подробнее</a> |
+            <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-primary">Просмотрено</a> |
             <a asp-page="./DeleteCinema" asp-route-id="@item.Id" class="btn btn-primary">Удалить</a>
         </div>
     </div>

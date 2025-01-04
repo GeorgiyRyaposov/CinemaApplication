@@ -81,7 +81,7 @@ namespace KinopoiskApi.Models;
         public List<Name> Names { get; set; }
 
         [JsonProperty("externalId")]
-        public ExternalId ExternalId { get; set; }
+        public ExternalId? ExternalId { get; set; }
 
         [JsonProperty("logo")]
         public Logo Logo { get; set; }

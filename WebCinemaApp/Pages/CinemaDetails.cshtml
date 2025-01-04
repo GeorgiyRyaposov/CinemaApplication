@@ -10,14 +10,14 @@
 <html>
     <body>
         <div class="card" style="width: 40rem;">
-            <img class="card-img-top" src="@Model.Cinema.Details?.LogoUrl" alt="@Model.Cinema.Name">
+            <img class="card-img-left" src="@Model.Cinema.Details?.LogoUrl" alt="@Model.Cinema.Name">
             <div class="card-body">
                 <h5 class="card-title">@Model.Cinema.Details?.Name (@Model.Cinema.Details?.AlternativeName)</h5>
                 <p class="card-text">@Model.Cinema.Details?.Description</p>
                 <p class="card-text">Год: @Model.Cinema.Details?.Year</p>
                 <p class="card-text">Жанры: @GetCommaSeparatedValues(Model.Cinema.Details?.Genres)</p>
                 <p class="card-text">Страна: @GetCommaSeparatedValues(Model.Cinema.Details?.Countries)</p>
-                <p class="card-text">Длительность: @GetLength()</p>
+                <p class="card-text">@GetLength()</p>
                 <p class="card-text">Imdb: @Model.Cinema.Details?.RatingImdb</p>
                 <p class="card-text">Кинопоиск: @Model.Cinema.Details?.RatingKP</p>
                 <a asp-page="./DeleteCinema" asp-route-id="@Model.Cinema.Id" class="btn btn-primary">Удалить</a>
@@ -26,16 +26,34 @@
     </body>
 </html>
 
-@{
+@functions
+{
     string GetLength()
     {
         if (Model.Cinema.Details == null)
         {
-            return "-";
+            return string.Empty;
         }
 
-        var span = TimeSpan.FromSeconds(Model.Cinema.Details.Length);
-        return span.ToString();
+        var span = TimeSpan.FromMinutes(Model.Cinema.Details.Length);
+
+        var timeText = GetTimeText(span);
+        var lengthType = Model.Cinema.Details.IsSeries
+            ? "Время серии "
+            : "Время ";
+        return lengthType + timeText;
+    }
+    
+    private string GetTimeText(TimeSpan span)
+    {
+        if (span.TotalSeconds == 0)
+        {
+            return "-";
+        }
+        
+        return span.TotalHours > 0 
+            ? $"{span.Hours} ч {span.Minutes} мин" 
+            : $"{span.Minutes} мин";
     }
 
     string GetCommaSeparatedValues(string[]? values)
