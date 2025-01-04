@@ -27,8 +27,24 @@ public class CinemaService : ICinemaService
         await _cinemaRepository.CreateAsync(cinema, cancellationToken);
     }
 
+    public async Task<Cinema> GetCinema(int id)
+    {
+        return await _cinemaRepository.GetCinema(id);
+    }
+
     public async Task<List<Cinema>> GetCinemas()
     {
         return await _cinemaRepository.GetCinemas();
+    }
+
+    public async Task DeleteCinema(int id, CancellationToken cancellationToken)
+    {
+        var cinema = await _cinemaRepository.GetCinema(id);
+        if (cinema == null)
+        {
+            throw new ArgumentNullException(nameof(cinema));
+        }
+        
+        await _cinemaRepository.DeleteCinema(cinema, cancellationToken);
     }
 }

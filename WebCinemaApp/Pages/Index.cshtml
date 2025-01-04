@@ -1,6 +1,5 @@
 ﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@using DataAccess.Models
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -25,7 +24,8 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Cinemas) {
+    @foreach (var item in Model.Cinemas) 
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -39,29 +39,9 @@
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./DeleteCinema" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
-
-@* <form method="post"> *@
-@*     <div class="form-group"> *@
-@*         <label asp-for="Cinema.Name">Название фильма:</label> *@
-@*         <input asp-for="Cinema.Name" class="form-control" placeholder="Введите название фильма"> *@
-@*     </div> *@
-@*     <button type="submit" class="btn btn-primary">Добавить</button> *@
-@* </form> *@
-@* *@
-@* <div class="list-group"> *@
-@*     @{ *@
-@*         foreach (var cinema in Model.Cinemas) *@
-@*         { *@
-@*             var itemClass = true//cinema == Model.SelectedCinema *@
-@*                 ? "list-group-item list-group-item-action" *@
-@*                 : "list-group-item list-group-item-action active"; *@
-@*             <a href="#" class=@itemClass>@cinema.Name</a> *@
-@*         } *@
-@*     } *@
-@* </div> *@

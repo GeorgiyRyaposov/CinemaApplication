@@ -18,4 +18,17 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
             .AsNoTracking()
             .ToListAsync();
     }
+
+    public async Task<Cinema> GetCinema(int id)
+    {
+        return await context.Cinemas
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.Id == id);
+    }
+
+    public async Task DeleteCinema(Cinema cinema, CancellationToken cancellationToken)
+    {
+        context.Cinemas.Remove(cinema);
+        await context.SaveChangesAsync(cancellationToken);
+    }
 }
