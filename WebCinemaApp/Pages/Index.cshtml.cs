@@ -1,5 +1,5 @@
 using BusinessLogic.Services;
-using DataAccess.Models;
+using Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

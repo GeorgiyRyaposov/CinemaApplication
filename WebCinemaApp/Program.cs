@@ -1,5 +1,7 @@
 using BusinessLogic;
+using Common.Infrastructure.Services;
 using DataAccess;
+using KinopoiskApi;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddDataServices();
 builder.Services.AddBusinessLogicServices();
+builder.Services.AddScoped<IMovieInfoService, KinopoiskService>();
 
 builder.Services.AddDbContext<CinemaContext>(x =>
 {
@@ -22,8 +25,8 @@ if (app.Environment.IsDevelopment())
 {
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<CinemaContext>();
-    context.Database.EnsureCreated();
-    //context.Database.Migrate();
+    //context.Database.EnsureCreated();
+    context.Database.Migrate();
 }
 else
 {

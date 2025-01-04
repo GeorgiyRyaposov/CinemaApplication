@@ -1,4 +1,4 @@
-﻿using DataAccess.Models;
+﻿using Common.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories;

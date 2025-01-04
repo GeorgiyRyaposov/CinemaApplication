@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using Common.Infrastructure.Services;
+using Common.Models;
 using DataAccess.Repositories;
 
 namespace BusinessLogic.Services;
@@ -6,10 +7,12 @@ namespace BusinessLogic.Services;
 public class CinemaService : ICinemaService
 {
     private readonly ICinemaRepository _cinemaRepository;
+    private readonly IMovieInfoService _movieInfoService;
 
-    public CinemaService(ICinemaRepository cinemaRepository)
+    public CinemaService(ICinemaRepository cinemaRepository, IMovieInfoService movieInfoService)
     {
         _cinemaRepository = cinemaRepository;
+        _movieInfoService = movieInfoService;
     }
 
     public async Task CreateAsync(string cinemaName, CancellationToken cancellationToken)
@@ -19,9 +22,12 @@ public class CinemaService : ICinemaService
             throw new ArgumentNullException(nameof(cinemaName));
         }
         
+        var details = await _movieInfoService.FindDetails(cinemaName);
+        
         var cinema = new Cinema
         {
             Name = cinemaName,
+            Details = details,
         };
 
         await _cinemaRepository.CreateAsync(cinema, cancellationToken);
