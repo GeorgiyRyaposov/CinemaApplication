@@ -10,5 +10,7 @@ public interface ICinemaRepository
     Task<Cinema> GetCinema(int id);
     Task<Cinema> GetCinemaWithDetails(int id);
 
+    Task UpdateCinema(Cinema cinema, CancellationToken cancellationToken);
+    
     Task DeleteCinema(Cinema cinema, CancellationToken cancellationToken);
 }

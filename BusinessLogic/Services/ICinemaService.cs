@@ -10,4 +10,5 @@ public interface ICinemaService
     Task<Cinema> GetCinemaWithDetails(int id);
     
     Task DeleteCinema(int id, CancellationToken cancellationToken);
+    Task MarkAsWatched(int id, CancellationToken cancellationToken);
 }

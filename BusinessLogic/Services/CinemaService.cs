@@ -66,4 +66,16 @@ public class CinemaService : ICinemaService
         
         await _cinemaRepository.DeleteCinema(cinema, cancellationToken);
     }
+
+    public async Task MarkAsWatched(int id, CancellationToken cancellationToken)
+    {
+        var cinema = await _cinemaRepository.GetCinema(id);
+        if (cinema.Watched)
+        {
+            return;
+        }
+        
+        cinema.Watched = true;
+        await _cinemaRepository.UpdateCinema(cinema, cancellationToken);
+    }
 }

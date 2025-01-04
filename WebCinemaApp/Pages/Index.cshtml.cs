@@ -30,4 +30,11 @@ public class IndexModel : PageModel
 
         return Page();
     }
+
+    public async Task<IActionResult> OnPostWatchedAsync(int id)
+    {
+        await _cinemaService.MarkAsWatched(id, CancellationToken.None);
+        
+        return RedirectToPage("./Index");
+    }
 }

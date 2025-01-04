@@ -54,4 +54,10 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
         context.Cinemas.Remove(cinema);
         await context.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task UpdateCinema(Cinema cinema, CancellationToken cancellationToken)
+    {
+        context.Cinemas.Update(cinema);
+        await context.SaveChangesAsync(cancellationToken);
+    }
 }

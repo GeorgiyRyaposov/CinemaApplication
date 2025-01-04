@@ -9,17 +9,30 @@
     <a asp-page="CreateCinema" class="btn btn-primary">Добавить</a>
 </p>
 
-@foreach (var item in Model.Cinemas)
-{
-    <div class="card" style="width: 24rem;">
-        <img class="card-img-top" src="@item.Details?.PreviewUrl" alt="{@item.Name}">
-        <div class="card-body">
-            <h5 class="card-title">@item.Name</h5>
-            <p class="card-text">@item.Details?.ShortDescription</p>
-            <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-primary">Подробнее</a> |
-            <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-primary">Просмотрено</a> |
-            <a asp-page="./DeleteCinema" asp-route-id="@item.Id" class="btn btn-primary">Удалить</a>
+@{
+    foreach (var item in Model.Cinemas)
+    {
+        <div class="card" style="width: 24rem;">
+            <img class="card-img-top" src="@item.Details?.PreviewUrl" alt="{@item.Name}">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name</h5>
+                <p class="card-text">@item.Details?.ShortDescription</p>
+                
+                @if (item.Watched)
+                {
+                    <p class="card-text"><span class="badge bg-success">Просмотрено</span></p>
+                }
+                else
+                {
+                    <form method="post" asp-page-handler="watched">
+                        <button class="btn btn-primary">Посмотрел</button>
+                        <input type="hidden" name="id" value="@item.Id" />
+                    </form>
+                }
+                <p></p>
+                <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-secondary">Подробнее</a> |
+                <a asp-page="./DeleteCinema" asp-route-id="@item.Id" class="btn btn-danger">Удалить</a>
+            </div>
         </div>
-    </div>
-    <br/>
+    }
 }
