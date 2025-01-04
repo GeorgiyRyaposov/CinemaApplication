@@ -15,23 +15,26 @@ public class KinopoiskService : IMovieInfoService
         var response = await client.GetAsync(new Uri(API_URL + $"movie/search?page=1&limit=10&query={name}"));
         if (!response.IsSuccessStatusCode)
         {
-            return null!;
+            return GetEmptyDetails(name);
         }
         
         var result = await response.Content.ReadAsAsync<Root>();
-        return ConvertToDetails(result);
+        var details = ConvertToDetails(result) ?? GetEmptyDetails(name);
+
+        return details;
     }
 
-    private Details ConvertToDetails(Root? root)
+    private Details? ConvertToDetails(Root? root)
     {
         var doc = root?.Docs.FirstOrDefault();
         if (doc == null)
         {
-            return null!;
+            return null;
         }
         
         return new Details
         {
+            Name = doc.Name,
             AlternativeName = doc.AlternativeName,
             Year = doc.Year,
             Description = doc.Description,
@@ -52,10 +55,18 @@ public class KinopoiskService : IMovieInfoService
             RatingKP = doc.Rating.Kp,
         };
     }
+
+    private Details GetEmptyDetails(string name)
+    {
+        return new Details
+        {
+            AlternativeName = name,
+        };
+    }
     
     private HttpClient GetClient()
     {
-        var key = Environment.GetEnvironmentVariable("X-API-KEY", EnvironmentVariableTarget.User);
+        var key = Environment.GetEnvironmentVariable("X-API-KEY", EnvironmentVariableTarget.Process);
         
         var client = new HttpClient();
         client.DefaultRequestHeaders.Add("X-API-KEY", key);

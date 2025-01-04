@@ -18,16 +18,39 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
             .AsNoTracking()
             .ToListAsync();
     }
+    
+    public async Task<List<Cinema>> GetCinemasWithDetails()
+    {
+        return await context.Cinemas
+            .AsQueryable()
+            .AsNoTracking()
+            .Include(x => x.Details)
+            .ToListAsync();
+    }
 
     public async Task<Cinema> GetCinema(int id)
     {
         return await context.Cinemas
             .AsNoTracking()
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstAsync(m => m.Id == id);
+    }
+    
+    public async Task<Cinema> GetCinemaWithDetails(int id)
+    {
+        return await context.Cinemas
+            .AsNoTracking()
+            .Include(x => x.Details)
+            .FirstAsync(m => m.Id == id);
     }
 
     public async Task DeleteCinema(Cinema cinema, CancellationToken cancellationToken)
     {
+        var details = context.Details.FirstOrDefault(x => x.CinemaId == cinema.Id);
+        if (details != null)
+        {
+            context.Details.Remove(details);
+        }
+        
         context.Cinemas.Remove(cinema);
         await context.SaveChangesAsync(cancellationToken);
     }

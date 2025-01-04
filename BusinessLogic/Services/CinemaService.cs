@@ -22,6 +22,14 @@ public class CinemaService : ICinemaService
             throw new ArgumentNullException(nameof(cinemaName));
         }
         
+        var cinemas = await _cinemaRepository.GetCinemas();
+        if (cinemas.Any(x => string.Equals(cinemaName, x.Name, StringComparison.OrdinalIgnoreCase) ||
+                             string.Equals(cinemaName, x.Details?.AlternativeName, StringComparison.OrdinalIgnoreCase)))
+        {
+            //already exists
+            return;
+        }
+        
         var details = await _movieInfoService.FindDetails(cinemaName);
         
         var cinema = new Cinema
@@ -37,10 +45,15 @@ public class CinemaService : ICinemaService
     {
         return await _cinemaRepository.GetCinema(id);
     }
-
-    public async Task<List<Cinema>> GetCinemas()
+    
+    public async Task<Cinema> GetCinemaWithDetails(int id)
     {
-        return await _cinemaRepository.GetCinemas();
+        return await _cinemaRepository.GetCinemaWithDetails(id);
+    }
+
+    public async Task<List<Cinema>> GetCinemasWithDetails()
+    {
+        return await _cinemaRepository.GetCinemasWithDetails();
     }
 
     public async Task DeleteCinema(int id, CancellationToken cancellationToken)

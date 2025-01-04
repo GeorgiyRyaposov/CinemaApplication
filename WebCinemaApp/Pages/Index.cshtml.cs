@@ -20,9 +20,13 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnGetAsync()
     {
-        var cinemas = await _cinemaService.GetCinemas();
+        var cinemas = await _cinemaService.GetCinemasWithDetails();
 
-        Cinemas = cinemas;
+        Cinemas = cinemas
+            .OrderBy(x => x.Watched)
+            .ThenByDescending(x => x.Details?.RatingKP)
+            .ThenByDescending(x => x.Details?.RatingImdb)
+            .ToList();
 
         return Page();
     }

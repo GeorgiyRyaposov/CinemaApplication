@@ -1,0 +1,50 @@
+﻿@page
+@model WebCinemaApp.Pages.CinemaDetails
+
+@{
+    ViewData["Title"] = "Подробнее";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <body>
+        <div class="card" style="width: 40rem;">
+            <img class="card-img-top" src="@Model.Cinema.Details?.LogoUrl" alt="@Model.Cinema.Name">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Cinema.Details?.Name (@Model.Cinema.Details?.AlternativeName)</h5>
+                <p class="card-text">@Model.Cinema.Details?.Description</p>
+                <p class="card-text">Год: @Model.Cinema.Details?.Year</p>
+                <p class="card-text">Жанры: @GetCommaSeparatedValues(Model.Cinema.Details?.Genres)</p>
+                <p class="card-text">Страна: @GetCommaSeparatedValues(Model.Cinema.Details?.Countries)</p>
+                <p class="card-text">Длительность: @GetLength()</p>
+                <p class="card-text">Imdb: @Model.Cinema.Details?.RatingImdb</p>
+                <p class="card-text">Кинопоиск: @Model.Cinema.Details?.RatingKP</p>
+                <a asp-page="./DeleteCinema" asp-route-id="@Model.Cinema.Id" class="btn btn-primary">Удалить</a>
+            </div>
+        </div>
+    </body>
+</html>
+
+@{
+    string GetLength()
+    {
+        if (Model.Cinema.Details == null)
+        {
+            return "-";
+        }
+
+        var span = TimeSpan.FromSeconds(Model.Cinema.Details.Length);
+        return span.ToString();
+    }
+
+    string GetCommaSeparatedValues(string[]? values)
+    {
+        if (values == null || values.Length == 0)
+        {
+            return "-";
+        }
+
+        return string.Join(", ", values);
+    }
+}

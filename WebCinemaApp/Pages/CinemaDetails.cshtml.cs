@@ -5,15 +5,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebCinemaApp.Pages;
 
-public class DeleteCinema : PageModel
-{    
+public class CinemaDetails : PageModel
+{
     [BindProperty]
     public Cinema Cinema { get; set; }
     
     private readonly ILogger<IndexModel> _logger;
     private readonly ICinemaService _cinemaService;
 
-    public DeleteCinema(ILogger<IndexModel> logger, ICinemaService cinemaService)
+    public CinemaDetails(ILogger<IndexModel> logger, ICinemaService cinemaService)
     {
         _logger = logger;
         _cinemaService = cinemaService;
@@ -26,20 +26,8 @@ public class DeleteCinema : PageModel
             return NotFound();
         }
 
-        Cinema = await _cinemaService.GetCinema(id.GetValueOrDefault());
+        Cinema = await _cinemaService.GetCinemaWithDetails(id.GetValueOrDefault());
 
         return Page();
-    }
-
-    public async Task<IActionResult> OnPostAsync(int? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-        
-        await _cinemaService.DeleteCinema(id.GetValueOrDefault(), CancellationToken.None);
-
-        return RedirectToPage("./Index");
     }
 }

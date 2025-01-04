@@ -7,6 +7,7 @@ public class Details
     public int CinemaId { get; set; }
     public Cinema? Cinema { get; set; }
     
+    public string Name { get; set; }
     public string AlternativeName { get; set; }
     public int Year { get; set; }
     public string Description { get; set; }

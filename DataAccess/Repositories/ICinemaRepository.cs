@@ -6,7 +6,9 @@ public interface ICinemaRepository
 {
     Task CreateAsync(Cinema cinema, CancellationToken cancellationToken);
     Task<List<Cinema>> GetCinemas();
+    Task<List<Cinema>> GetCinemasWithDetails();
     Task<Cinema> GetCinema(int id);
+    Task<Cinema> GetCinemaWithDetails(int id);
 
     Task DeleteCinema(Cinema cinema, CancellationToken cancellationToken);
 }

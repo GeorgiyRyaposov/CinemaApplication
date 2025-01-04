@@ -6,36 +6,19 @@
 }
 
 <p>
-    <a asp-page="CreateCinema">Create New</a>
+    <a asp-page="CreateCinema">Добавить</a>
 </p>
-<table class="table">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Cinemas[0].Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Cinemas[0].Watched)
-        </th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model.Cinemas) 
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Watched)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./DeleteCinema" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+
+@foreach (var item in Model.Cinemas)
+{
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="@item.Details?.PreviewUrl" alt="{@item.Name}">
+        <div class="card-body">
+            <h5 class="card-title">@item.Name</h5>
+            <p class="card-text">@item.Details?.ShortDescription</p>
+            <a asp-page="./CinemaDetails" asp-route-id="@item.Id" class="btn btn-primary">Подробнее</a> |
+            <a asp-page="./DeleteCinema" asp-route-id="@item.Id" class="btn btn-primary">Удалить</a>
+        </div>
+    </div>
+    <br/>
+}

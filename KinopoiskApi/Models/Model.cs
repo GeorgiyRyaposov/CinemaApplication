@@ -168,7 +168,7 @@ namespace KinopoiskApi.Models;
         public double FilmCritics { get; set; }
 
         [JsonProperty("russianFilmCritics")]
-        public int RussianFilmCritics { get; set; }
+        public double RussianFilmCritics { get; set; }
 
         [JsonProperty("await")]
         public int? Await { get; set; }
