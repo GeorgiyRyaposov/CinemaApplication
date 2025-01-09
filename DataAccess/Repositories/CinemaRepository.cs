@@ -14,7 +14,6 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
     public async Task<List<Cinema>> GetCinemas()
     {
         return await context.Cinemas
-            .AsQueryable()
             .AsNoTracking()
             .ToListAsync();
     }
@@ -22,7 +21,6 @@ public class CinemaRepository(CinemaContext context) : ICinemaRepository
     public async Task<List<Cinema>> GetCinemasWithDetails()
     {
         return await context.Cinemas
-            .AsQueryable()
             .AsNoTracking()
             .Include(x => x.Details)
             .ToListAsync();
